@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'pages.apps.PagesConfig',
     'snippets',
+    'works',
 ]
 
 MIDDLEWARE = [
