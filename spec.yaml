@@ -19,70 +19,32 @@ tags:
     description: Operations available to regular developers
 
 paths:
-  /inventory:
+  /users:
     get:
-      tags:
-        - developers
-      summary: searches inventory
-      operationId: searchInventory
+      summary: get information about a user 
       description: |
-        By passing in the appropriate options, you can search for
-        available inventory in the system
+        by passing in an id or username, you can get information/profile of a specific user
       parameters:
         - in: query
-          name: searchString
-          description: pass an optional search string for looking up inventory
-          required: false
+          name: username
           schema:
             type: string
-        - in: query
-          name: skip
-          description: number of records to skip for pagination
-          schema:
-            type: integer
-            format: int32
             minimum: 0
-        - in: query
-          name: limit
-          description: maximum number of records to return
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
+            maximum: 100
       responses:
-        '200':
-          description: search results matching criteria
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/InventoryItem'
-        '400':
-          description: bad input parameter
-    post:
-      tags:
-        - admins
-      summary: adds an inventory item
-      operationId: addInventory
-      description: Adds an item to the system
-      responses:
-        '201':
-          description: item created
-        '400':
-          description: 'invalid input, object invalid'
-        '409':
-          description: an existing item already exists
-      requestBody:
+       '200':
+        description: search results matching criteria
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InventoryItem'
-        description: Inventory item to add
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: bad input parameter
 components:
   schemas:
-    User
+    User:
       type: object
       required:
         - id 
@@ -98,19 +60,35 @@ components:
           example: madecunningly
         followers:
           type: string
-          
-          # links to a collection
-        following:
-          # collection
-        liked:
-          # collection
-        inbox:
-        outbox:
         preferedUsername:
+          type: string
         icon:
+          type: string
+          format: url
+          example: 'https://kenzoishii.example.com/image/165987aklre4'
         summary:
+          type: string
 
-    Work
-    Series
-    Message
-    Comment
+    Work:
+      type: object
+      required:
+        - id
+        - title
+        - creatorID
+        - content
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        user:
+           $ref: '#/components/schemas/User'
+        attachments:
+          type: object
+        source:
+          type: object
+        contents:
+          type: string
+
+    
