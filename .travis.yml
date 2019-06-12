@@ -6,7 +6,7 @@ services:
 before_install:
   - docker build -t kreeher/chives .
   - docker ps -a
-  - docker run kreeher/chives
+ # - docker run kreeher/chives
 
 
 # todo: add tests and require pass
