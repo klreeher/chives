@@ -8,7 +8,7 @@ before_install:
   - docker ps -a
 
 # command to install dependencies
-install: "make"
+script: "make"
 
 # todo: add tests and require pass
 deploy:
